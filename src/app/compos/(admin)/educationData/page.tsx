@@ -3,7 +3,7 @@ import {Loader2} from 'lucide-react'
 import { useState } from "react"
 import toast from "react-hot-toast";
 
-const page = () => {
+const Page = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -206,4 +206,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
