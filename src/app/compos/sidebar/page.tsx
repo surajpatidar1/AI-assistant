@@ -1,6 +1,6 @@
 'use client'
 
-import { AmpersandIcon, BookOpen, Crown, Github, Link2Icon, Linkedin } from 'lucide-react'
+import {  BookOpen, Crown, Github, Link2Icon, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';

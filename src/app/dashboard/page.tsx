@@ -135,8 +135,9 @@ const Page = () => {
           setMessages(prev => [...prev, errorMessage]);
         }
       }
-    } catch (error: any) {
-      console.error("API Error:", error);
+    } catch (error) {
+       const err = error instanceof Error ? error : new Error("Unknown error");
+      console.error("API Error:", err.message);
       toast.error("Network error. Please check your connection and try again.");
       
       // Add error message to chat
@@ -171,7 +172,7 @@ const Page = () => {
       case 'asking_name':
         return "eg- suraj";
       case 'normal_chat':
-        return `Ask about Suraj's skills, projects, or experience...`;
+        return `Ask about Suraj&apos;s skills, projects, or experience...`;
       default:
         return "Ask anything about Suraj...";
     }
@@ -198,7 +199,7 @@ const Page = () => {
        <Sidebar/>
       <section className="bg-white/5 backdrop-blur-[90px] border border-white/10 rounded-2xl shadow-xl w-full max-w-8xl m-2 md:m-5 flex flex-col">
         <div className="w-full h-full max-h-[70vh] text-white p-3 md:p-5 rounded-2xl overflow-y-auto flex-1">
-          {messages.map((msg, i) => (
+          {messages.map((msg) => (
             <div 
               key={msg.id} 
               className={`p-4 rounded-lg max-w-lg mb-4 ${

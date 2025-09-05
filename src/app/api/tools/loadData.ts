@@ -13,8 +13,6 @@ const getEducationTool = tool(
   async () => {
     try {
       const rows = await get_education_information();
-      console.log("💾 EDUCATION USER TOOL TRIGGERED");
-
       const educationData = rows.filter(
         (row) => row.school || row.college || row.degree
       );
@@ -53,7 +51,6 @@ const getSkillsTool = tool(
   async () => {
     try {
       const rows = await get_education_information();
-      console.log("💾 SKILLS USER TOOL TRIGGERED");
 
       const allSkills = rows
         .filter((row) => row.skills)
@@ -89,7 +86,6 @@ const getProjectsTool = tool(
   async () => {
     try {
       const rows = await get_education_information();
-      console.log("💾 PROJECTS USER TOOL TRIGGERED");
 
       const projects = rows
         .filter((row) => row.project)
@@ -119,7 +115,6 @@ const getPersonalTool = tool(
   async () => {
     try {
       const rows = await get_personal_data();
-      console.log("💾 PERSONAL USER TOOL TRIGGERED");
 
       if (rows && rows.length > 0) {
         const p = rows[0];
@@ -147,7 +142,7 @@ const getPersonalTool = tool(
 // ================= SAVE USER =================
 const saveUserTool = tool(
   async ({ name }: { name: string }) => {
-    console.log("💾 SAVE USER TOOL TRIGGERED with name:", name);
+
     try {
       const result = await save_username({ name });
       console.log("Save user tool result:", result);
@@ -171,7 +166,7 @@ const saveUserTool = tool(
 
 const readSurajDataTool = tool(
   async ({ category }: { category: string }) => {
-    console.log("📖 READ SURAJ DATA TOOL TRIGGERED for:", category);
+ 
 
     switch (category.toLowerCase()) {
       case "personal":

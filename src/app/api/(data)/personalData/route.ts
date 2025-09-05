@@ -2,8 +2,18 @@
 import sql from '@/app/configs/postgres/connectDb';
 import { NextRequest, NextResponse } from 'next/server'
 
+
+interface personalData{
+id: string,
+fullname: string,
+email:string,
+phone:  string,
+date_of_birth: Date,
+gender:string
+}
+
 export async function POST(req:NextRequest) {
-    const body = await req.json()
+    const body: personalData = await req.json()
     
     const {fullname,email,phone,date_of_birth,gender} = body;
 
