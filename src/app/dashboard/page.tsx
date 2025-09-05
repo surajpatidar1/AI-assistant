@@ -1,9 +1,9 @@
 'use client'
 
-import { Github, Link2Icon, Linkedin, Loader2, Menu, Send } from 'lucide-react'
-import Image from 'next/image'
+import { Loader2, Send } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import Sidebar from '../compos/sidebar/page';
 
 type Message = { 
   type: 'user' | 'agent'; 
@@ -23,7 +23,7 @@ const Page = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [appState, setAppState] = useState<AppState>('asking_name');
   const [userName, setUserName] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -169,7 +169,7 @@ const Page = () => {
   const getPlaceholder = () => {
     switch (appState) {
       case 'asking_name':
-        return "Enter your name...";
+        return "eg- suraj";
       case 'normal_chat':
         return `Ask about Suraj's skills, projects, or experience...`;
       default:
@@ -177,18 +177,15 @@ const Page = () => {
     }
   };
 
-  useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsOpen(false);
-    }
-  }, []);
+ 
 
   // Quick suggestions for user to click
   const quickSuggestions = [
     "What are Suraj's skills?",
     "Tell me about Suraj's education",
     "What projects has Suraj worked on?",
-    "How can I contact Suraj?"
+    "How can I contact Suraj?",
+    
   ];
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -197,67 +194,8 @@ const Page = () => {
 
   return (
     <div className="min-h-screen bg-black bg-cover bg-center flex gap-1">
-      <section
-        className={`bg-white/5 backdrop-blur-[90px] border border-white/10 rounded-r-lg shadow-xl text-white transition-all duration-300 h-screen 
-        ${isOpen ? "w-56 p-4" : "w-20 p-2"} hidden md:block`}
-      >
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-2 mb-4 flex justify-center items-center bg-white/5 hover:bg-white/10 rounded-lg w-full"
-        >
-          {isOpen ? 'Collapse' : <Menu />}
-        </button>
-
-        <div className="flex justify-center">
-          <Image
-            src={"/logo.png"}
-            alt="logo"
-            width={isOpen ? 100 : 50}
-            height={isOpen ? 100 : 50}
-            className={`rounded-full mb-5 transition-all duration-300 ${
-              isOpen ? "p-3" : "p-1"
-            }`}
-          />
-        </div>
-
-        {isOpen && (
-          <h1 className="text-white text-lg font-semibold mb-3 text-center">
-            Suraj's Assistant
-          </h1>
-        )}
-        <hr className="text-white/10 mb-8" />
-
-        <nav className="flex flex-col gap-3">
-          <a 
-            href="https://www.linkedin.com/in/suraj-patidar-777940279/" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex gap-3 rounded-lg py-3 px-3 font-bold text-lg items-center justify-center hover:bg-white/10 transition-all cursor-pointer"
-          >
-            <Linkedin />
-            {isOpen && <span>LinkedIn</span>}
-          </a>
-          <a 
-            href="https://github.com/surajpatidar1" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex gap-3 rounded-lg py-3 px-3 font-bold text-lg items-center justify-center hover:bg-white/10 transition-all cursor-pointer"
-          >
-            <Github />
-            {isOpen && <span>GitHub</span>}
-          </a>
-          <a 
-            href="https://workwith-ai-3p43.vercel.app/" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex gap-3 rounded-lg py-3 px-3 font-bold text-lg items-center justify-center hover:bg-white/10 transition-all cursor-pointer"
-          >
-            <Link2Icon />
-            {isOpen && <span>Portfolio</span>}
-          </a>
-        </nav>
-      </section>
-
+      
+       <Sidebar/>
       <section className="bg-white/5 backdrop-blur-[90px] border border-white/10 rounded-2xl shadow-xl w-full max-w-8xl m-2 md:m-5 flex flex-col">
         <div className="w-full h-full max-h-[70vh] text-white p-3 md:p-5 rounded-2xl overflow-y-auto flex-1">
           {messages.map((msg, i) => (
@@ -265,7 +203,7 @@ const Page = () => {
               key={msg.id} 
               className={`p-4 rounded-lg max-w-lg mb-4 ${
                 msg.type === 'user' 
-                  ? 'ml-auto bg-blue-500/20 border border-blue-500/30' 
+                  ? 'ml-auto bg-white/8 border border-white/8' 
                   : 'mr-auto bg-white/10 border border-white/10'
               }`}
             >

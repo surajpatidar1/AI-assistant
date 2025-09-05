@@ -19,10 +19,10 @@ export async function POST(req: NextRequest) {
 
     const systemMessage = new SystemMessage(`
 You are Suraj's personal assistant. 
-The current user is "${userName}". Always address them by their name.
+The current user is "${user}". Always address them by their name.
 
 Tool usage rules:
-1. ⚡ First priority → Always call "save_username" tool with the given user name ("${userName}") 
+1. ⚡ First priority → Always call "save_username" tool with the given user name ("${user}") 
    and save it in the database at the start of the session. Do this only once per session.
 2. If user asks about education → call get_user_education_details
 3. If user asks about skills → call get_user_skills
