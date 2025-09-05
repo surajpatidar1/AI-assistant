@@ -1,5 +1,6 @@
 'use client'
 
+
 import {  BookOpen, Crown, Github, Link2Icon, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
@@ -7,6 +8,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const Sidebar = () => {
+
 
       const [isOpen, setIsOpen] = useState<boolean>(true);
       const [isAdmin,setIsAdmin] = useState<boolean>(false);
@@ -17,7 +19,7 @@ const Sidebar = () => {
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   setPassword(e.target.value);
 };
-      console.log(process.env.NEXT_PUBLIC_ADMIN_PASSWORD)
+ 
       const handlePassword = (e:FormEvent)=>{
              e.preventDefault();
         if(process.env.NEXT_PUBLIC_ADMIN_PASSWORD == password){
@@ -37,9 +39,11 @@ const Sidebar = () => {
   }, []);
   return (
 <section
-        className={`bg-white/5 backdrop-blur-[90px] border border-white/10 rounded-r-lg shadow-xl text-white transition-all duration-300 h-screen 
+        className={`bg-white/5 backdrop-blur-[50px] border border-white/10 rounded-r-lg shadow-xl text-white transition-all duration-300 h-screen 
         ${isOpen ? "w-56 p-4" : "w-20 p-2"} hidden md:block`}
       >
+
+                
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 mb-4 flex justify-center items-center bg-white/5 hover:bg-white/10 rounded-lg w-full"

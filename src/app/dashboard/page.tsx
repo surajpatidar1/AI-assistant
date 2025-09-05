@@ -194,10 +194,10 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black bg-cover bg-center flex gap-1">
+    <div className="min-h-screen bg-[url('/black.jpg')] bg-cover bg-center flex gap-1">
       
        <Sidebar/>
-      <section className="bg-white/5 backdrop-blur-[90px] border border-white/10 rounded-2xl shadow-xl w-full max-w-8xl m-2 md:m-5 flex flex-col">
+      <section className="bg-white/5 backdrop-blur-[80px] border border-white/10 rounded-2xl shadow-xl w-full max-w-8xl m-2 md:m-5 flex flex-col">
         <div className="w-full h-full max-h-[70vh] text-white p-3 md:p-5 rounded-2xl overflow-y-auto flex-1">
           {messages.map((msg) => (
             <div 
@@ -258,7 +258,7 @@ const Page = () => {
             />
             <button 
               type="submit"
-              className="rounded-lg bg-blue-600 p-3 text-sm hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-white flex items-center justify-center"
+              className="rounded-lg bg-white/10 p-3 text-sm hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-white flex items-center justify-center"
               disabled={loading || !input.question.trim()}
             >
               {loading ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
