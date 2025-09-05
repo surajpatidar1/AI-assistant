@@ -4,9 +4,14 @@ import sql from "../postgres/connectDb";
 export type EducationInfo = {
   id: number;
   degree: string;
-  institution: string;
+  college: string;
   year: string;
   skills?: string;
+  school:string;
+  project:string;
+  internship:string;
+  name:string;
+  certification :string;
 };
 
 // Type for personal information row
