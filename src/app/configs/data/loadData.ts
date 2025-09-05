@@ -6,7 +6,7 @@ export type EducationInfo = {
   degree: string;
   college: string;
   year: string;
-  skills?: string;
+  skills: string;
   school:string;
   project:string;
   internship:string;
