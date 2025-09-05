@@ -219,21 +219,33 @@ const readSurajDataTool = tool(
 - Suraj is a **Fresher**, currently focusing on building projects and gaining internship opportunities.
 - Hands-on experience with MERN stack, Next.js, and TypeScript through personal projects.`;
 
+      case "current_tech":
+      case "technology":
+      case "learning":
+        return `🚀 Suraj is currently learning and working with:
+- LLMs (Large Language Models)
+- Agents
+- Gemini (OpenAI)
+- LangChain`;
+
       default:
-        return "⚠️ Unknown category. Try: personal, skills, education, projects, certifications, hobbies, experience.";
+        return "⚠️ Unknown category. Try: personal, skills, education, projects, certifications, hobbies, experience, current_tech.";
     }
   },
   {
     name: "read_suraj_data",
     description:
-      "Read structured information about Suraj (personal, skills, education, projects, certifications, hobbies, experience).",
+      "Read structured information about Suraj (personal, skills, education, projects, certifications, hobbies, experience, current_tech).",
     schema: z.object({
       category: z
         .string()
-        .describe("The category to fetch, e.g. personal, skills, education, projects, certifications, hobbies, experience"),
+        .describe(
+          "The category to fetch, e.g. personal, skills, education, projects, certifications, hobbies, experience, current_tech"
+        ),
     }),
   }
 );
+
 
 
 // ================= EXPORT ALL =================
