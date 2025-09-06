@@ -40,7 +40,7 @@ const Sidebar = () => {
   return (
 <section
         className={`bg-white/5 backdrop-blur-[50px] border border-white/10 rounded-r-lg shadow-xl text-white transition-all duration-300 h-screen 
-        ${isOpen ? "w-56 p-4" : "w-20 p-2"} hidden md:block`}
+        ${isOpen ? "w-56 p-4" : "w-20 p-2"} `}
       >
 
                 
