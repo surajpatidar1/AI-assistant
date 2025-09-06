@@ -6,7 +6,7 @@ export async function POST(req: NextRequest, ) {
     const body = await req.json();
 
     const {skills} = body;
-    let id=10;
+    let id=8;
     
 
     if(!skills){

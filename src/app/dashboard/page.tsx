@@ -1,9 +1,10 @@
 'use client'
 
-import { Loader2, Send } from 'lucide-react';
+import { Loader2, Send, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Sidebar from '../compos/sidebar/page';
+import Markdown from 'react-markdown'
 
 type Message = { 
   type: 'user' | 'agent'; 
@@ -23,8 +24,13 @@ const Page = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [appState, setAppState] = useState<AppState>('asking_name');
   const [userName, setUserName] = useState<string>('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [iconPosition, setIconPosition] = useState({ x: 20, y: 20 });
+  const [isDragging, setIsDragging] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const dragStartPos = useRef({ x: 0, y: 0 });
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,6 +39,23 @@ const Page = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sidebarOpen && 
+          sidebarRef.current && 
+          !sidebarRef.current.contains(event.target as Node) &&
+          !(event.target as Element).closest('.mobile-toggle-icon')) {
+        setSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sidebarOpen]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -178,7 +201,37 @@ const Page = () => {
     }
   };
 
- 
+  // Handle touch events for dragging the icon
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    dragStartPos.current = {
+      x: touch.clientX - iconPosition.x,
+      y: touch.clientY - iconPosition.y
+    };
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    
+    const touch = e.touches[0];
+    const newX = touch.clientX - dragStartPos.current.x;
+    const newY = touch.clientY - dragStartPos.current.y;
+    
+    // Get viewport dimensions
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    
+    // Constrain to viewport boundaries
+    const constrainedX = Math.max(0, Math.min(newX, vw - 50)); // 50 is icon width
+    const constrainedY = Math.max(0, Math.min(newY, vh - 50)); // 50 is icon height
+    
+    setIconPosition({ x: constrainedX, y: constrainedY });
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
 
   // Quick suggestions for user to click
   const quickSuggestions = [
@@ -186,7 +239,6 @@ const Page = () => {
     "Tell me about Suraj's education",
     "What projects has Suraj worked on?",
     "How can I contact Suraj?",
-    
   ];
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -194,9 +246,28 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[url('/black.jpg')] bg-cover bg-center flex gap-1">
+    <div className="min-h-screen bg-[url('/black.jpg')] bg-cover bg-center flex gap-1 relative">
       
-       <Sidebar/>
+     
+      <div 
+        className="mobile-toggle-icon md:hidden fixed z-50 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center shadow-lg cursor-pointer"
+        style={{ left: `${iconPosition.x}px`, top: `${iconPosition.y}px` }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        {sidebarOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
+      </div>
+      
+      {/* Sidebar with mobile responsiveness */}
+      <div 
+        ref={sidebarRef}
+        className={`${sidebarOpen ? 'block absolute z-40 h-full' : 'hidden'} md:block md:relative`}
+      >
+        <Sidebar />
+      </div>
+      
       <section className="bg-white/5 backdrop-blur-[80px] border border-white/10 rounded-2xl shadow-xl w-full max-w-8xl m-2 md:m-5 flex flex-col">
         <div className="w-full h-full max-h-[70vh] text-white p-3 md:p-5 rounded-2xl overflow-y-auto flex-1">
           {messages.map((msg) => (
@@ -217,7 +288,9 @@ const Page = () => {
                     {formatTime(msg.timestamp)}
                   </span>
                 </div>
-                <p className="w-full text-white/90 whitespace-pre-wrap">{msg.text}</p>
+                  <div className="w-full text-white/90 whitespace-pre-wrap">
+                    <Markdown>{msg.text}</Markdown>
+                  </div>
               </div>
             </div>
           ))}

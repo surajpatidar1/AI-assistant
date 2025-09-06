@@ -90,7 +90,7 @@ const Sidebar = () => {
             {isOpen && <span>GitHub</span>}
           </a>
           <a 
-            href="https://workwith-ai-3p43.vercel.app/" 
+            href="https://surajpatidar-uh74.onrender.com" 
             target="_blank"
             rel="noopener noreferrer"
             className="flex gap-3 rounded-lg py-3 px-3 font-bold text-lg items-center justify-center hover:bg-white/10 transition-all cursor-pointer"

@@ -6,19 +6,21 @@ export async function POST(req: NextRequest, ) {
     const body = await req.json();
 
     const {internship} = body;
-    let id=2;
-    let lastest
+    let id=1;
+    
 
     if(!internship){
         return NextResponse.json({success:false, message: 'intership not get'},{status: 400});
-    }else{
-       lastest = ++id;
-       id = lastest++;
     }
 
     try {
         
-        const rows = await sql`INSERT INTO information  (internship) VALUES (${internship}) RETURNING *;`;
+        const rows = await sql`
+  UPDATE information
+  SET internship = ${internship}
+  WHERE id = ${id}
+  RETURNING *;
+`;
 
        if(!rows){
         return NextResponse.json({success: false, message:"Failed to save"},{status: 401})
