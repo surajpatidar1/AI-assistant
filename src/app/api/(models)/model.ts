@@ -25,7 +25,8 @@ export  const llm = new ChatGoogleGenerativeAI({
   };
 
   const callLlm = async( promptFormat:string)=>{
-       llm.invoke(promptFormat)
+    console.log("model")
+      return await llm.invoke(promptFormat)
   };
 
   const Askchain = RunnableSequence.from([promptFormat,callLlm])
