@@ -141,14 +141,14 @@ const Page = () => {
           };
           setMessages(prev => [...prev, agentMessage]);
           
-          // Update username if provided in response
+       
           if (data.userName && data.userName !== userName) {
             setUserName(data.userName);
           }
         } else {
           toast.error(data.message || "Sorry, I encountered an error. Please try again.");
           
-          // Add error message to chat
+  
           const errorMessage: Message = { 
             type: "agent", 
             text: "I'm sorry, I'm having trouble processing your request. Could you please try again?",
@@ -237,8 +237,7 @@ const Page = () => {
   const quickSuggestions = [
     "What are Suraj's skills?",
     "Tell me about Suraj's education",
-    "What projects has Suraj worked on?",
-    "How can I contact Suraj?",
+    "What projects has Suraj worked on?"
   ];
 
   const handleSuggestionClick = (suggestion: string) => {

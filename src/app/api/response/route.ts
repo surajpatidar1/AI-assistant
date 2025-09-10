@@ -6,6 +6,7 @@ import agent from "../agent/mainAgent";
 export async function POST(req: NextRequest) {
   try {
     const { input, userName, sessionId } = await req.json();
+    console.log(input, userName, sessionId)
 
   
     if (!input) {
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
         { messages: [new HumanMessage(input)] },
         { configurable: { thread_id: sessionId, user_name: user } }
       );
-
+ 
 
     const aiMessage = response.messages[response.messages.length - 1];
     const finalText = Array.isArray(aiMessage.content)
